@@ -14,10 +14,9 @@ class CuentaBancaria:
         self.__nombreCliente = nombreCliente
         self.__fechaApertura = fechaApertura
         if saldoInicial < 100000:
-            raise ValueError("El saldo inicial debe ser al menos de 100000")
+            raise ValueError("Saldo incial > 100000")
         self.__saldo = saldoInicial
-
-    # Métodos get y set
+        
     def get_numeroCta(self):
         return self.__numeroCta
     
@@ -32,17 +31,16 @@ class CuentaBancaria:
 
     def consignar(self, monto):
         if monto <= 0:
-            raise ValueError("El monto a consignar debe ser positivo")
+            raise ValueError("Consignar: El monto debe ser positivo")
         self.__saldo += monto
 
     def retirar(self, monto):
         if monto <= 0:
-            raise ValueError("El monto a retirar debe ser positivo")
+            raise ValueError("Retirar: El monto debe ser positivo")
         if monto > self.__saldo:
             raise ValueError("Fondos insuficientes")
         self.__saldo -= monto
 
-# Menú principal
 def menu():
     while True:
         print("\nMenú de operaciones bancarias")
@@ -54,9 +52,9 @@ def menu():
         opcion = int(input("Ingrese una opción: "))
 
         if opcion == 1:
-            numeroCta = input("Ingrese el número de cuenta: ")
-            nombreCliente = input("Ingrese el nombre del cliente: ")
-            fechaApertura = input("Ingrese la fecha de apertura: ")
+            numeroCta = input("Número de cuenta: ")
+            nombreCliente = input("Nombre del cliente: ")
+            fechaApertura = input("Fecha de apertura: ")
             try:
                 saldoInicial = float(input("Ingrese el saldo inicial: "))
                 cuenta = CuentaBancaria(numeroCta, nombreCliente, fechaApertura, saldoInicial)
@@ -71,7 +69,7 @@ def menu():
         elif opcion == 3:
             if 'cuenta' in locals():
                 try:
-                    monto = float(input("Ingrese el monto a consignar: "))
+                    monto = float(input("Monto a consignar: "))
                     cuenta.consignar(monto)
                     print("Consignación realizada exitosamente.")
                 except ValueError as e:
@@ -81,7 +79,7 @@ def menu():
         elif opcion == 4:
             if 'cuenta' in locals():
                 try:
-                    monto = float(input("Ingrese el monto a retirar: "))
+                    monto = float(input("Monto a retirar: "))
                     cuenta.retirar(monto)
                     print("Retiro realizado exitosamente.")
                 except ValueError as e:
